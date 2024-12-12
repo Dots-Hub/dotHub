@@ -1,16 +1,21 @@
-import {format} from "date-fns";
+import{Link} from "react-router-dom";
+import {formatISO9075} from "date-fns";
 
-export default function Post({title,summary,cover,content,createdAt}){
+export default function Post({_id,title,summary,cover,content,createdAt,author}){
     return(
         <div className="post">
           <div className="image">
-          <img src="https://www.go2ppo.com/wp-content/uploads/2018/10/AbInBev-1-1024x596.jpg" alt=""></img>
+            <Link to={`/post/${_id}`}>
+            <img src={'http://localhost:4000/'+cover} alt=""></img>
+            </Link>
           </div>
           <div className="texts">
+          <Link to={`/post/${_id}`}>
           <h2>{title}</h2>
+          </Link>
           <p className="info">
-            <a className="author">K Ranjith</a>
-            <time>{format(new Date(createdAt), 'MMM d, yyyy HH:mm')}</time>
+            <a className="author">{author.username}</a>
+            <time>{formatISO9075(new Date(createdAt))}</time>
           </p>
           <p className="summary">{summary}</p>
           </div>
