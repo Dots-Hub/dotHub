@@ -100,6 +100,65 @@ app.post('/post', uploadMiddleWare.single('file'), async (req,res) =>{
 
 });
 
+app.put('/post', uploadMiddleWare.single('file'), async (req, res) => {
+    let newPath = null;
+  
+    // Handle file upload and renaming
+    if (req.file) {
+      const { originalname, path } = req.file;
+      const parts = originalname.split('.');
+      const ext = parts[parts.length - 1];
+      newPath = path + '.' + ext;
+  
+      try {
+        fs.renameSync(path, newPath);
+      } catch (err) {
+        console.error('Error renaming file:', err);
+        return res.status(500).json({ error: 'File processing error' });
+      }
+    }
+  
+    // Verify JWT
+    const { token } = req.cookies;
+    jwt.verify(token, secret, {}, async (err, info) => {
+      if (err) {
+        console.error('JWT verification failed:', err);
+        return res.status(401).json({ error: 'Unauthorized access' });
+      }
+  
+      // Extract post data
+      const { company, season, title, summary, content, id } = req.body;
+  
+      // Find the post
+      const postDoc = await Post.findById(id);
+      if (!postDoc) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+  
+      // Check if the user is the author
+      const isAuthor = postDoc.author.equals(info.id);
+      if (!isAuthor) {
+        return res.status(403).json({ error: 'You are not the author of this post' });
+      }
+  
+      // Update the post
+      postDoc.company = company;
+      postDoc.season = season;
+      postDoc.title = title;
+      postDoc.summary = summary;
+      postDoc.content = content;
+  
+      if (newPath) {
+        postDoc.filePath = newPath; // Update file path if applicable
+      }
+  
+      await postDoc.save();
+  
+      res.json(postDoc);
+    });
+  });
+  
+
 
 app.get('/post',async (req,res) =>{
      res.json(

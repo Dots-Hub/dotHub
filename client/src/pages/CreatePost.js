@@ -2,6 +2,7 @@
    import 'react-quill/dist/quill.snow.css';
    import {useState} from "react";
 import { Navigate } from "react-router-dom";
+import Editor from "../Editor";
 
    const modules = {
     toolbar: [
@@ -17,6 +18,7 @@ import { Navigate } from "react-router-dom";
       // Media
       ['image', 'video'], // Insert images and videos
   
+
       // Clear formatting
       ['clean'], // Remove all formatting
     ],
@@ -71,13 +73,83 @@ import { Navigate } from "react-router-dom";
     }
       
         return (
-            <div style={{ maxWidth: '1000px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
+          /*<div style={{ maxWidth: '1000px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#ddd', marginRight: '10px' }}></div>
-              <h1 style={{ margin: '0' }}>Share Sphere</h1>
+              <h1 style={{ margin: '0', alignItems: 'center' }}>Share Sphere</h1>
             </div>
-            <p style={{ marginBottom: '20px' }}>Your story, your dot—connect with us and inspire others</p>
+            <p style={{ marginBottom: '20px'  }}>Your story, your dot—connect with us and inspire others</p>   */
+
+            <div style={{ 
+              maxWidth: '1000px', 
+              margin: '0 auto', 
+              fontFamily: 'Arial, sans-serif', 
+              padding: '20px',
+              backgroundColor: '#f4f8fb',
+              borderRadius: '12px',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+            }}>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                marginBottom: '20px',
+              }}>
+                <div style={{ 
+                  width: '60px', 
+                  height: '60px', 
+                  borderRadius: '50%', 
+                  overflow: 'hidden', 
+                  marginRight: '10px',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+                }}>
+                  <img 
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLuxp51ss2loY0wpNoIF7m51NhrWi7tvXuRw&s" 
+                    alt="William Shakespeare Silhouette" 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                    }} 
+                  />
+                </div>
+                <h1 style={{ 
+                  margin: '0', 
+                  fontSize: '2.5rem', 
+                  color: '#333', 
+                  fontWeight: '700',
+                  letterSpacing: '0.5px',
+                }}>
+                  Share Sphere
+                </h1>
+              </div>
+              <p style={{ 
+                marginBottom: '20px', 
+                fontSize: '1.2rem', 
+                color: '#555', 
+                lineHeight: '1.6', 
+                fontStyle: 'italic',
+              }}>
+                "Your story, your dot—connect with us and inspire others."
+              </p>
             
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <form onSubmit={createNewPost}>
               <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
 
@@ -106,10 +178,8 @@ import { Navigate } from "react-router-dom";
               onChange={ev=>setSummary(ev.target.value)}
               style={{marginTop:'20px', flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}/>
 
-              <ReactQuill 
-              value={content}
-              onChange={newValue=>setContent(newValue)}
-              style={{marginTop:'20px'}}  modules={modules} formats={formats}/>
+              
+              <Editor value={content} onChange={setContent} />
 
               <input type="file" 
               onChange={ev=>setFiles(ev.target.files)}
