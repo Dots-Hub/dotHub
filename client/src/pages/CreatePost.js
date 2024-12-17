@@ -40,33 +40,75 @@ import Editor from "../Editor";
     'image',
     'video',
   ];
-   
-   export default function CreatePost() {
-    const[company,setCompany] = useState('');
-    const[season,setSeason] = useState('');
-    const[title,setTitle] = useState('');
-    const[summary,setSummary] = useState('');
-    const[content,setContent] = useState('');
-    const[files,setFiles] = useState('');
-    const[redirect,setRedirect]= useState(false);
-   async function createNewPost(ev){
-        ev.preventDefault();
-        const data = new FormData();
-        data.set('company',company);
-        data.set('season',season);
-        data.set('title',title);
-        data.set('summary',summary);
-        data.set('content',content);
-        data.set('file',files[0])
-       const response = await fetch('http://localhost:4000/post',{
-          method: 'POST',
-           body : data,
-           credentials:'include',
-       });
-       if(response.ok){
-           setRedirect(true);
-       }
+     
+export default function CreatePost() {
+  const [company, setCompany] = useState('');
+  const [season, setSeason] = useState('');
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [content, setContent] = useState('');
+  const [files, setFiles] = useState(null);
+  const [redirect, setRedirect] = useState(false);
+  const [error, setError] = useState('');
+
+  async function createNewPost(ev) {
+    ev.preventDefault();
+    setError('');
+
+    // Validation checks
+    if (!company.trim()) {
+      setError('Company field is required');
+      return;
     }
+    if (!season.trim()) {
+      setError('Season field is required');
+      return;
+    }
+    if (!title.trim()) {
+      setError('Title field is required');
+      return;
+    }
+    if (!summary.trim()) {
+      setError('Summary field is required');
+      return;
+    }
+    if (!content.trim()) {
+      setError('Content field is required');
+      return;
+    }
+    if (!files || files.length === 0) {
+      setError('Please upload a photo of the company');
+      return;
+    }
+
+    try {
+      const data = new FormData();
+      data.set('company', company.trim());
+      data.set('season', season.trim());
+      data.set('title', title.trim());
+      data.set('summary', summary.trim());
+      data.set('content', content);
+      data.set('file', files[0]);
+
+      const response = await fetch('http://localhost:4000/post', {
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        setRedirect(true);
+      } else {
+        // Handle server errors
+        const errorData = await response.json();
+        setError(errorData.message || 'An error occurred while creating the post');
+      }
+    } catch (err) {
+      setError('Network error. Please check your connection.');
+      console.error('Post submission error:', err);
+    }
+  }
+
 
     if(redirect){
        return <Navigate to={'/'}/>
@@ -135,7 +177,18 @@ import Editor from "../Editor";
               </p>
             
             
-            
+              {error && (
+        <div style={{
+          backgroundColor: '#ffdddd',
+          color: '#ff0000',
+          padding: '10px',
+          borderRadius: '5px',
+          marginBottom: '20px',
+          textAlign: 'center'
+        }}>
+          {error}
+        </div>
+      )}
 
 
 
@@ -154,7 +207,7 @@ import Editor from "../Editor";
               <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
 
                 <input type="company" 
-                placeholder="Company" 
+                placeholder="Company*" 
                 value = {company}
                 onChange={ev=>setCompany(ev.target.value)}
                 style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
