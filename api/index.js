@@ -42,6 +42,9 @@ app.post('/register', async (req, res) => {
 
 app.post('/login',async (req,res) => {
     const {username,password} = req.body;
+    if(!(username && password)){
+      res.status(400).json('all the fields are required');
+    }
     const userDoc = await User.findOne({username});
     const passOk =bcrypt.compareSync(password, userDoc.password);
     if(passOk)
