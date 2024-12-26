@@ -7,9 +7,18 @@ export default function LoginPage(){
    const [username,setUsername] = useState('');
    const [password,setPassword] = useState('');
    const [redirect,setRedirect] = useState(false);
+   const [error, setError] = useState('');
    const {setUserInfo} = useContext(UserContext);
    async function login(ev){
        ev.preventDefault();
+       setError('');
+
+       if (!username || !password) {
+        setError('Username and password are required');
+        return;
+    }
+
+
       const response = await fetch('http://localhost:4000/login',
        {
         method: 'POST',
@@ -37,6 +46,12 @@ export default function LoginPage(){
     return(
         <form className="login" onSubmit={login}>
             <h1>Login</h1>
+
+            {error && (
+               <div className="error" style={{ color: 'red', marginBottom: '10px' }}>
+                   {error}
+               </div>
+           )}
             <input type="text" 
             placeholder="username" 
             value={username} 
