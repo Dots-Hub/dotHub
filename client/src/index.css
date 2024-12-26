@@ -11,3 +11,60 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.Share-Sphere{
+                  margin: '0';
+                  font-size: 2.5rem; 
+                  color: '#333';
+                  font-weight: '700';
+                  letter-spacing: '0.5px';
+}
+.tag-line{
+  margin-Bottom: 20px;
+  font-Size: 1.2rem;
+  color: #555;
+  line-height: 1.6;
+  font-style: italic;
+}
+.form{
+  display: flex;
+  gap: 20px;
+   
+}
+.placeholder{
+  margin-top: 10px;
+  flex: 1;
+  padding: 10px; 
+  border-radius: 5px; 
+  border: 1px solid #ccc;
+}
+
+
+.share-sphere-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f4f8fb;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.share-sphere-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image-shakesphere{
+  width: 60px; 
+  height: 60px;
+  border-radius: 100%;
+  overflow: hidden;
+  margin-right: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+}
+

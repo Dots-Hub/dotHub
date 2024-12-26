@@ -122,114 +122,65 @@ export default function CreatePost() {
             </div>
             <p style={{ marginBottom: '20px'  }}>Your story, your dot—connect with us and inspire others</p>   */
 
-            <div style={{ 
-              maxWidth: '1000px', 
-              margin: '0 auto', 
-              fontFamily: 'Arial, sans-serif', 
-              padding: '20px',
-              backgroundColor: '#f4f8fb',
-              borderRadius: '12px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              textAlign: 'center',
-            }}>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                marginBottom: '20px',
-              }}>
-                <div style={{ 
-                  width: '60px', 
-                  height: '60px', 
-                  borderRadius: '50%', 
-                  overflow: 'hidden', 
-                  marginRight: '10px',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                }}>
+            <div className="share-sphere-container">
+              <div className="share-sphere-header">
+                <div className="image-shakesphere">
                   <img 
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLuxp51ss2loY0wpNoIF7m51NhrWi7tvXuRw&s" 
                     alt="William Shakespeare Silhouette" 
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
-                    }} 
-                  />
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', }} 
+                 />
                 </div>
-                <h1 style={{ 
-                  margin: '0', 
-                  fontSize: '2.5rem', 
-                  color: '#333', 
-                  fontWeight: '700',
-                  letterSpacing: '0.5px',
-                }}>
+                <h1 className="Share-Sphere">
                   Share Sphere
                 </h1>
               </div>
-              <p style={{ 
-                marginBottom: '20px', 
-                fontSize: '1.2rem', 
-                color: '#555', 
-                lineHeight: '1.6', 
-                fontStyle: 'italic',
-              }}>
+              <p className="tag-line">
                 "Your story, your dot—connect with us and inspire others."
               </p>
-            
-            
+
               {error && (
-        <div style={{
-          backgroundColor: '#ffdddd',
-          color: '#ff0000',
-          padding: '10px',
-          borderRadius: '5px',
-          marginBottom: '20px',
-          textAlign: 'center'
-        }}>
+        <div className="error-message">
           {error}
         </div>
       )}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
             <form onSubmit={createNewPost}>
-              <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+              <div className="form">
 
-                <input type="company" 
+                <input
+                className="placeholder" 
+                type="company" 
                 placeholder="Company*" 
                 value = {company}
                 onChange={ev=>setCompany(ev.target.value)}
-                style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+                />
 
-                <input type="season" 
+                <input 
+                className="placeholder"
+                type="season" 
                 placeholder="Season" 
                 value={season}
                 onChange={ev=>setSeason(ev.target.value)}
-                style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+                 />
               </div>
 
-              <input type="title" 
+              <input 
+              className="placeholder"
+              type="title" 
               placeholder="Title" 
               value = {title}
               onChange={ev=>setTitle(ev.target.value)}
-              style={{ flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}/>
+              />
 
-              <input type="summary" 
+              <input 
+              className="placeholder"
+              type="summary" 
               placeholder="Summary" 
               value={summary}
               onChange={ev=>setSummary(ev.target.value)}
-              style={{marginTop:'20px', flex: 1, padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}/>
+              />
 
               
               <Editor value={content} onChange={setContent} />
